@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "./supabaseClient";
+import { supabase, supabaseConfigStatus } from "./supabaseClient";
 
 const GlobalContext = createContext({});
 
@@ -44,11 +44,7 @@ export function GlobalProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const hasSupabaseConfig = Boolean(
-      process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    );
-
-    if (!hasSupabaseConfig) {
+    if (!supabaseConfigStatus.hasSupabaseConfig) {
       setUser(MOCK_USER);
       setLoading(false);
       return;
