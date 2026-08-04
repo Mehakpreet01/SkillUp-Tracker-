@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../lib/supabaseClient";
+import { supabase, supabaseConfigStatus } from "../../lib/supabaseClient";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,6 +34,12 @@ export default function Login() {
           <h1 className="text-3xl font-extrabold text-white mb-2">Welcome Back</h1>
           <p className="text-slate-400 text-sm">Sign in to continue your developer journey.</p>
         </div>
+
+        {!supabaseConfigStatus.hasSupabaseConfig && (
+          <div className="mb-6 bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm p-3 rounded-lg text-center">
+            Missing Supabase env vars in this deployment.
+          </div>
+        )}
 
         <form onSubmit={handleLogin} className="bg-[#111827] border border-slate-800/80 shadow-2xl rounded-2xl p-8 backdrop-blur-xl">
           {error && (

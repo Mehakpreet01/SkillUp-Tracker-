@@ -4,6 +4,12 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const hasSupabaseConfig = Boolean(supabaseUrl && supabaseAnonKey);
 
+export const supabaseConfigStatus = {
+  hasSupabaseConfig,
+  hasSupabaseUrl: Boolean(supabaseUrl),
+  hasSupabaseAnonKey: Boolean(supabaseAnonKey),
+};
+
 function missingSupabaseError() {
   return new Error("Supabase is not configured for this environment. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel.");
 }
