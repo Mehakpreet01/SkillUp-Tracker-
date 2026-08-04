@@ -1,7 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const runtimeSupabaseConfig =
+  typeof window !== "undefined" && window.__SUPABASE_CONFIG__
+    ? window.__SUPABASE_CONFIG__
+    : null;
+
+const supabaseUrl = runtimeSupabaseConfig?.url || process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = runtimeSupabaseConfig?.anonKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const hasSupabaseConfig = Boolean(supabaseUrl && supabaseAnonKey);
 
 export const supabaseConfigStatus = {
