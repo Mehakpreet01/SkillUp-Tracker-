@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import { useUser } from "../../lib/useUser";
@@ -10,8 +10,19 @@ const MAX_SCORE_HISTORY = 20;
 const DIFFICULTY_LEVELS = ["easy", "medium", "hard"];
 
 export default function Revision() {
-  const searchParams = useSearchParams();
   const { user, loading } = useUser();
+
+  if (loading) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <RevisionContent user={user} />
+    </Suspense>
+  );
+}
+
+function RevisionContent({ user }) {
+  const searchParams = useSearchParams();
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("hard");
   const [quizTopic, setQuizTopic] = useState("");
@@ -151,7 +162,7 @@ export default function Revision() {
     });
   }, [searchParams, user]);
 
-  if (loading || !user) return null;
+  if (!user) return null;
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100">
