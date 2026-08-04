@@ -1,75 +1,84 @@
-# SkillUp Tracker — Setup Guide (Beginner Friendly)
+# SkillUp Tracker
 
-Yeh guide step-by-step batati hai ki apni website ko FREE me live kaise karna hai,
-taaki aap aur aapke dost sab login karke use kar sakein.
+A full-stack skill tracking app with AI-powered recommendations, weekly goal tracking, and an integrated LeetCode progress log. Built with Supabase (auth + database) and deployed on Vercel.
 
-Total time: ~30-40 minutes (pehli baar).
+## Features
 
----
+- 🔐 **Authentication** — Email/password signup and login via Supabase Auth
+- 📚 **Skills Tracker** — Log and manage skills you're learning
+- 🤖 **AI Dashboard** — Get AI-driven suggestions on what skill to focus on next
+- 🎯 **Weekly Targets** — Set and track weekly goals and progress
+- 💻 **LeetCode Tracker** — Log solved problems with easy/medium/hard breakdowns
+- 📝 **Revision & Quizzes** — AI-generated quizzes based on your logged skills
+- 📄 **Auto Resume Builder** — Automatically updates your resume as new skills are added
 
-## STEP 1: Supabase account banao (login + database ke liye)
+## Tech Stack
 
-1. https://supabase.com pe jao, "Start your project" pe click karo, GitHub/Google se signup karo.
-2. "New Project" banao — koi bhi naam do (e.g. `skillup-tracker`), password set karo, region "Mumbai/Singapore" choose karo (India ke liye fast rahega).
-3. Project ban jaane ke baad (1-2 min lagta hai), left sidebar me **SQL Editor** pe jao.
-4. Is project ke andar `supabase.sql` file khol kar uska POORA content copy karo, SQL Editor me paste karo, aur **RUN** button dabao.
-   - Isse database tables ban jaayengi (skills, weekly targets, leetcode log, profiles) — with security bhi set ho jaayegi taaki har user ka data private rahe.
-5. Left sidebar me **Project Settings -> API** pe jao. Yahan se do cheezein copy karo:
+- **Frontend/Backend:** Next.js
+- **Database & Auth:** Supabase
+- **AI:** Anthropic Claude API
+- **Hosting:** Vercel
+
+## Getting Started
+
+### 1. Set Up Supabase (Database + Auth)
+
+1. Create an account at [supabase.com](https://supabase.com) and start a new project.
+2. Choose a region close to your users for best performance.
+3. Open the **SQL Editor** in your project dashboard.
+4. Run the contents of [`supabase.sql`](./supabase.sql) to create all required tables (skills, weekly targets, LeetCode log, profiles) along with Row Level Security policies to keep each user's data private.
+5. Go to **Project Settings → API** and note down:
    - `Project URL`
    - `anon public` key
 
----
+### 2. Get an Anthropic API Key
 
-## STEP 2: Anthropic API key lo (AI features ke liye)
+1. Sign up at [console.anthropic.com](https://console.anthropic.com).
+2. Generate a new key under **API Keys**.
+3. Usage is pay-as-you-go with low per-request cost; free starter credits are included. Add a small billing credit (e.g., $5) to ensure uninterrupted usage.
 
-1. https://console.anthropic.com pe jao, account banao.
-2. **API Keys** section me jaake ek nayi key generate karo, copy kar lo.
-3. Note: is API ka usage paid hai (bahut hi kam cost per request), console pe kuch free credits bhi milte hain shuru me. Agar aap chahte ho, aap billing me thoda credit add kar sakte ho (jaise $5) taaki app chalta rahe.
+### 3. Clone the Repository
 
----
+```bash
+git clone https://github.com/<your-username>/skillup-tracker.git
+cd skillup-tracker
+```
 
-## STEP 3: Code apne computer/GitHub pe le jao
+### 4. Configure Environment Variables
 
-1. Yahan diya gaya poora `skillup` folder download karo.
-2. Ek naya GitHub account/repo banao (github.com pe free hai): repo name `skillup-tracker`.
-3. Is folder ko GitHub repo me upload kar do (GitHub website pe directly "uploading an existing file" se drag-drop bhi kar sakte ho, coding ki zaroorat nahi).
+Create a `.env.local` file in the project root:
 
----
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+```
 
-## STEP 4: Vercel pe deploy karo (yeh aapki website LIVE karega)
+### 5. Deploy on Vercel
 
-1. https://vercel.com pe jao, "Continue with GitHub" se login karo.
-2. "Add New Project" pe click karo, apna `skillup-tracker` GitHub repo select karo, "Import" pe click karo.
-3. Deploy karne se pehle, **Environment Variables** section me yeh 3 values add karo:
+1. Push this repository to your own GitHub account.
+2. Go to [vercel.com](https://vercel.com) and log in with GitHub.
+3. Click **Add New Project**, select your repository, and click **Import**.
+4. Add the same three environment variables listed above under **Environment Variables**.
+5. Click **Deploy**. Your app will be live within 1–2 minutes at a URL like:
+   ```
+   https://skillup-tracker-yourname.vercel.app
+   ```
 
-   | Name | Value |
-   |------|-------|
-   | `NEXT_PUBLIC_SUPABASE_URL` | Step 1 se copy kiya hua Project URL |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Step 1 se copy kiya hua anon key |
-   | `ANTHROPIC_API_KEY` | Step 2 se copy ki hui key |
+Share the link — each user who signs up gets their own private, isolated data.
 
-4. "Deploy" button dabao. 1-2 minute me aapki website live ho jaayegi, ek URL milega jaise:
-   `https://skillup-tracker-yourname.vercel.app`
+## Roadmap
 
-5. Yeh URL apne dosto ke saath share karo — woh sign up karke apna account bana sakte hain, aur sab ka data alag-alag, private rahega (koi kisi ka data nahi dekh sakta).
+- [ ] Profile photo upload
+- [ ] Skill categories/tags
+- [ ] Leaderboard among friends
+- [ ] Google OAuth login
 
----
+## Support
 
-## Features jo bane hain
+If you run into any issues during setup, open an issue with the specific error message for help troubleshooting.
 
-- ✅ Signup/Login (email + password, Supabase Auth)
-- ✅ Skills page — kya seekha add karo
-- ✅ Dashboard — AI batayega next kya skill pe kaam karna chahiye
-- ✅ Weekly Targets — is hafte ke goals aur progress
-- ✅ LeetCode Tracker — problems log karo, total/easy/medium/hard count dikhta hai
-- ✅ Revision/Test — AI aapki skills pe based quiz banata hai
-- ✅ Resume — jab bhi nayi skill add karo (checkbox se), AI usi format me resume me add kar deta hai
+## License
 
-## Aage kya improve kar sakte ho (optional)
+This project is open source and available under the [MIT License](./LICENSE).
 
-- Profile photo upload
-- Skill categories/tags
-- Leaderboard dosto ke beech (kaun zyada LeetCode solve kar raha hai)
-- Email/password ke saath Google login bhi add karna (Supabase me easy hai)
-
-Kisi bhi step pe atko to bata dena, us specific error ke hisaab se help kar dunga.
