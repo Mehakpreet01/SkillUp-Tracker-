@@ -1,4 +1,5 @@
 import "./globals.css";
+import Script from "next/script";
 import { GlobalProvider } from "../lib/GlobalContext";
 
 const supabasePublicConfig = {
@@ -14,14 +15,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <head>
         {supabasePublicConfig.url && supabasePublicConfig.anonKey && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.__SUPABASE_CONFIG__ = ${JSON.stringify(supabasePublicConfig)};`,
-            }}
-          />
+          <Script id="supabase-config" strategy="beforeInteractive">
+            {`window.__SUPABASE_CONFIG__ = ${JSON.stringify(supabasePublicConfig)};`}
+          </Script>
         )}
+      </head>
+      <body>
         <GlobalProvider>
           {children}
         </GlobalProvider>
